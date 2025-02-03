@@ -35,6 +35,10 @@ class Db_object
         $result = static::find_this_query("SELECT * FROM ". static::$table_name." WHERE id=?",[$id]);
         return !empty($result) ? array_shift($result): false;
     }
+    public static function find_by_email($email) {
+        $result = static::find_this_query("SELECT * FROM users WHERE email = ?", [$email]);
+        return !empty($result) ? array_shift($result) : false;
+    }
 
     /* CRUD */
     public function create() {

@@ -30,6 +30,7 @@ class User extends Db_object
         return !empty($the_result_array) ? array_shift($the_result_array) : false;
     }
 
+
     /* CRUD */
     /*properties als array voorzien*/
     public function get_properties(){
