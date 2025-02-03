@@ -119,15 +119,15 @@ class Db_object
             }
         }
         //create sql commando, prepared statement (? welk id)
-        //$properties=['email',...,'last-name]
-        // email = ?, ... last-name = ?
+        //$properties=['username',...,'last-name]
+        // username = ?, ... last-name = ?
 
         $sql = "UPDATE $table SET " . implode(', ', array_map(fn($field) => "$field = ?", array_keys($properties))) . " WHERE id = ?";
 
         //array_map met fn($field) => "$field = ?":
         //
         //Hiermee wordt voor elk veld een correcte field = ?-toewijzing gemaakt.
-        //Bijv.: email = ?, password = ?, first_name = ?, last_name = ?.
+        //Bijv.: username = ?, password = ?, first_name = ?, last_name = ?.
 
         //execute
         $database->query($sql,$escaped_values);

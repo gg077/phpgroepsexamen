@@ -12,7 +12,7 @@ $user = $session->get_logged_in_user();
                 </div>
                 <div class="ms-3 name">
 	                <h5 class="font-bold"><?php echo $user->first_name . " " . $user->last_name; ?></h5>
-	                <h6 class="text-muted mb-0">@<?php echo $user->username; ?></h6>
+	                <h6 class="text-muted mb-0"><?php echo $user->email; ?></h6>
                 </div>
 	            <a class="text-danger display-3 text-center font-bold" href="../logout.php"><i class="bi bi-power"></i></a>
             </div>

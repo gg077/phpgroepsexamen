@@ -5,7 +5,7 @@ class User extends Db_object
     //properties
     //public,private, protected
     public $id;
-    public $username;
+    public $email;
     public $password;
     public $first_name;
     public $last_name;
@@ -14,18 +14,18 @@ class User extends Db_object
     protected static $table_name = 'users';
     //methods
 
-    public static function verify_user($username,$password){
+    public static function verify_user($email,$password){
         global $database;
-        $username = $database->escape_string($username);
+        $email = $database->escape_string($email);
         $password = $database->escape_string($password);
 
-        // select * from users where username = $username and password = $password
+        // select * from users where email = $email and password = $password
         $sql = "SELECT * FROM ". self::$table_name ." WHERE ";
-        $sql .= "username = ? ";
+        $sql .= "email = ? ";
         $sql .= "AND password = ?";
         $sql .= " LIMIT 1";
 
-        $the_result_array = self::find_this_query($sql,[$username,$password]);
+        $the_result_array = self::find_this_query($sql,[$email,$password]);
 
         return !empty($the_result_array) ? array_shift($the_result_array) : false;
     }
@@ -35,7 +35,7 @@ class User extends Db_object
     public function get_properties(){
         return[
             'id'=> $this->id,
-            'username'=>$this->username,
+            'email'=>$this->email,
             'password'=>$this->password,
             'first_name'=>$this->first_name,
             'last_name'=>$this->last_name,

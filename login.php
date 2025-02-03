@@ -8,19 +8,19 @@ require_once("includes/header.php");
         header("location:index.php");
     }
     if(isset($_POST['submit'])){
-        $username=trim($_POST['username']);
+        $email=trim($_POST['email']);
         $password=trim($_POST['password']);
         //check als de user bestaat in onze database
-        $user_found = User::verify_user($username, $password);
+        $user_found = User::verify_user($email, $password);
 
 		if($user_found){
 			$session->login($user_found);
 			header("location:admin/index.php");
 		}else{
-			$the_message = "Your password and username FAILED!";
+			$the_message = "Your password and email FAILED!";
 		}
     }else{
-		$username = "";
+		$email = "";
 		$password = "";
     }
 ?>
@@ -41,7 +41,7 @@ require_once("includes/header.php");
 				<?php endif; ?>
                 <form action="" method="post">
                     <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="text" class="form-control form-control-xl" placeholder="Username" name="username" value="<?php echo htmlentities($username); ?>">
+                        <input type="text" class="form-control form-control-xl" placeholder="email" name="email" value="<?php echo htmlentities($email); ?>">
                         <div class="form-control-icon">
                             <i class="bi bi-person"></i>
                         </div>

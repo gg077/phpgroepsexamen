@@ -46,7 +46,7 @@ if (isset($_GET['delete'])) {
 						<thead>
 						<tr>
 							<th>Klantnr</th>
-							<th>username</th>
+							<th>email</th>
 							<th>paswoord</th>
 							<th>Voornaam</th>
 							<th>Familienaam</th>
@@ -62,7 +62,7 @@ if (isset($_GET['delete'])) {
 								<td><?= $user->id; ?></td>
 								<td><span><img height="40" width="40" class="avatar me-3"
 								               src="../admin/assets/static/images/faces/8.jpg"
-								               alt=""></span><?= $user->username; ?></td>
+								               alt=""></span><?= $user->email; ?></td>
 								<td><?= $user->password; ?></td>
 								<td><?= $user->first_name; ?></td>
 								<td><?= $user->last_name; ?></td>
@@ -88,7 +88,7 @@ if (isset($_GET['delete'])) {
 						<thead>
 						<tr>
 							<th>Klantnr</th>
-							<th>username</th>
+							<th>email</th>
 							<th>paswoord</th>
 							<th>Voornaam</th>
 							<th>Familienaam</th>
@@ -105,7 +105,7 @@ if (isset($_GET['delete'])) {
 								<td><?= $user->id; ?></td>
 								<td><span><img height="40" width="40" class="avatar me-3"
 								               src="../admin/assets/static/images/faces/8.jpg"
-								               alt=""></span><?= $user->username; ?></td>
+								               alt=""></span><?= $user->email; ?></td>
 								<td><?= $user->password; ?></td>
 								<td><?= $user->first_name; ?></td>
 								<td><?= $user->last_name; ?></td>
