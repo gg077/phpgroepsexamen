@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     $confirmpassword = trim($_POST['confirmpassword']);
 
     // Controleer of gebruiker bestaat op basis van e-mail
-    $user_found = User::find_by_email($email);  // Nieuwe methode nodig!
+    $user_found = User::find_by_email($email);
 
     if ($user_found) {
         $the_message = "This user exists, please login!";
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
         $the_message = "New user: " . $user->email . " was added, click below to login!";
         $_SESSION['the_message'] = $the_message;
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: login.php"); // Redirect naar login
         exit();
     } else {
         $the_message = "Passwords do not match!";

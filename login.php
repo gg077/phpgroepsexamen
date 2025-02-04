@@ -4,6 +4,7 @@ require_once("includes/header.php");
 ?>
 <?php
 	$the_message = "";
+
     if($session->is_signed_in()){
         header("location:index.php");
     }
@@ -16,6 +17,7 @@ require_once("includes/header.php");
 		if($user_found){
 			$session->login($user_found);
 			header("location:admin/index.php");
+            exit();
 		}else{
 			$the_message = "Your password and email FAILED!";
 		}

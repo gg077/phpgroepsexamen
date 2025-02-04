@@ -14,21 +14,39 @@ class User extends Db_object
     protected static $table_name = 'users';
     //methods
 
-    public static function verify_user($email,$password){
+    public static function verify_user($email, $password) {
         global $database;
         $email = $database->escape_string($email);
-        $password = $database->escape_string($password);
 
-        // select * from users where email = $email and password = $password
-        $sql = "SELECT * FROM ". self::$table_name ." WHERE ";
-        $sql .= "email = ? ";
-        $sql .= "AND password = ?";
-        $sql .= " LIMIT 1";
+        // Zoek gebruiker op e-mail
+        $sql = "SELECT * FROM " . self::$table_name . " WHERE email = ? LIMIT 1";
+        $the_result_array = self::find_this_query($sql, [$email]);
 
-        $the_result_array = self::find_this_query($sql,[$email,$password]);
+        if (!empty($the_result_array)) {
+            $user = array_shift($the_result_array); // Haal het eerste resultaat op
 
-        return !empty($the_result_array) ? array_shift($the_result_array) : false;
+            // Check of wachtwoord al gehashed is
+            if (password_verify($password, $user->password)) {
+                return $user; // Wachtwoord is al gehashed → login normaal
+            }
+
+            // Controleer of het wachtwoord nog plaintext is
+            if ($user->password === $password) {
+                // Dit betekent dat het wachtwoord nog in plaintext is opgeslagen
+                // 3. Hash het wachtwoord nu en update de database
+                $new_hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                $user->password = $new_hashed_password;
+                $user->update();
+
+                return $user; // Geef de gebruiker terug en laat ze inloggen
+            }
+        }
+
+        return false; // Geen gebruiker of wachtwoord incorrect
     }
+
+
 
 
     /* CRUD */
