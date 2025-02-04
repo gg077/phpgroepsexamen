@@ -6,6 +6,7 @@ class User extends Db_object
     //public,private, protected
     public $id;
     public $email;
+    public $google_id;
     public $password;
     public $first_name;
     public $last_name;
@@ -55,6 +56,7 @@ class User extends Db_object
         return[
             'id'=> $this->id,
             'email'=>$this->email,
+            'google_id'=>$this->google_id,
             'password'=>$this->password,
             'first_name'=>$this->first_name,
             'last_name'=>$this->last_name,

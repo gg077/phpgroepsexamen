@@ -25,6 +25,17 @@ require_once("includes/header.php");
 		$email = "";
 		$password = "";
     }
+
+$params = [
+    'client_id'     => '778909448480-0uo8b8deag2te15nq7di0cao7blc73dm.apps.googleusercontent.com',
+    'redirect_uri'  => 'http://127.0.0.1/blogoop2025klas/google_callback.php',
+    'response_type' => 'code',
+    'scope'         => 'openid email profile',
+];
+
+$google_auth_url = "https://accounts.google.com/o/oauth2/auth?" . http_build_query($params);
+
+
 ?>
 <div id="auth">
     <div class="row h-100">
@@ -60,10 +71,20 @@ require_once("includes/header.php");
                             Keep me logged in
                         </label>
                     </div>
-                    <input type="submit" name="submit" value="Log in" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">
-<!--                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>-->
+                    <div class="d-flex justify-content-center gap-3 mt-5">
+                        <input type="submit" name="submit" value="Log in" class="btn btn-primary" style="width: 200px">
+
+                        <a href="<?php echo htmlspecialchars($google_auth_url); ?>" class="btn btn-danger">
+                            Log in met Google
+                        </a>
+
+                    </div>
+
+
+                    <!--                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>-->
                 </form>
-                <div class="text-center mt-5 text-lg fs-4">
+
+                <div class="text-center mt-3 text-lg fs-4">
                     <p class="text-gray-600">Don't have an account? <a href="register.php" class="font-bold">Sign
                             up</a>.</p>
                     <p><a class="font-bold" href="auth-forgot-password.html">Forgot password?</a>.</p>
