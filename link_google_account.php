@@ -1,6 +1,7 @@
 <?php
 require_once './includes/config_google.php';
 require_once './admin/includes/Db_object.php';
+require_once './admin/includes/User.php';
 
 session_start();
 

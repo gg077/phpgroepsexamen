@@ -15,6 +15,14 @@ class User extends Db_object
     protected static $table_name = 'users';
     //methods
 
+
+    // In User class
+    public static function find_by_google_id($google_id) {
+        global $database;
+        $sql = "SELECT * FROM users WHERE google_id = '{$google_id}' LIMIT 1";
+        $result = $database->query($sql);
+        return $result ? mysqli_fetch_assoc($result) : false;
+    }
     public static function verify_user($email, $password) {
         global $database;
         $email = $database->escape_string($email);
