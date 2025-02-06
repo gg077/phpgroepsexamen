@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/register_google.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/google_callback.php" beforeDir="false" afterPath="$PROJECT_DIR$/google_callback.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/link_google_account.php" beforeDir="false" afterPath="$PROJECT_DIR$/link_google_account.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +62,7 @@
       <workItem from="1738682930381" duration="125000" />
       <workItem from="1738744011697" duration="1375000" />
       <workItem from="1738745404408" duration="7086000" />
-      <workItem from="1738831093310" duration="2832000" />
+      <workItem from="1738831093310" duration="4486000" />
     </task>
     <servers />
   </component>
