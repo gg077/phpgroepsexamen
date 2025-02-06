@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Gekke Design</title>
     <style>
         body {
             background: linear-gradient(45deg, #ff0099, #493240);
