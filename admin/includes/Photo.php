@@ -10,6 +10,7 @@ class Photo extends Db_object
     public $size;
     public $type;
     public $alternate_text;
+    public $user_id;
     public $created_at;
     public $deleted_at;
 
@@ -25,7 +26,15 @@ class Photo extends Db_object
         UPLOAD_ERR_NO_TMP_DIR=>"Missing temp folder",
         UPLOAD_ERR_CANT_WRITE=>"Failed to write to disk",
         UPLOAD_ERR_EXTENSION=>"A php extension stopped your upload",
+    ];
 
+    // Maximum file size in bytes (5MB)
+    const MAX_FILE_SIZE = 5242880;
+    // Allowed file types
+    const ALLOWED_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'image/gif'
     ];
 
     /**
@@ -48,6 +57,7 @@ class Photo extends Db_object
             'size'=>$this->size,
             'type'=>$this->type,
             'alternate_text'=>$this->alternate_text,
+            'user_id' => $this->user_id,
         ];
     }
     public function set_file($file){
@@ -56,6 +66,12 @@ class Photo extends Db_object
             return false;
         }elseif($file['error'] != 0){
             $this->errors[]= $this->upload_errors_array['error'];
+            return false;
+        }elseif($file['size'] > self::MAX_FILE_SIZE){
+            $this->errors[] = "File size exceeds maximum limit of 5MB";
+            return false;
+        }elseif(!in_array($file['type'], self::ALLOWED_TYPES)){
+            $this->errors[] = "Invalid file type. Only JPEG, PNG and GIF files are allowed";
             return false;
         }else{
             $date = date('Y_m_d_H_i_s');
@@ -114,12 +130,14 @@ class Photo extends Db_object
         }
     }
 
-    public function picture_path(){
-        if($this->filename && file_exists($this->upload_directory.DS.$this->filename)){
-            return $this->upload_directory.DS.$this->filename;
-        }else{
-            return 'https://placehold.co/300';
+    public function picture_path() {
+        $file_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
+
+        if ($this->filename && file_exists($file_path)) {
+            return $this->upload_directory . DS . $this->filename;
         }
+
+        return 'https://placehold.co/300';
     }
     // Deze methode verwijdert de oude afbeelding fysiek van de server.
     // Dit gebeurt alleen als er een bestand is gekoppeld aan het Photo-object.
@@ -132,4 +150,33 @@ class Photo extends Db_object
         }
     }
 
+    public function associate_with_blog($blog_id) {
+        global $database;
+
+        if (empty($this->id) || empty($blog_id)) {
+            $this->errors[] = "Missing photo ID or blog ID";
+            return false;
+        }
+
+        $sql = "INSERT INTO blogs_photos (blog_id, photo_id) VALUES (?, ?)";
+        return $database->query($sql, [$blog_id, $this->id]);
+    }
+    public function delete() {
+        // First remove the file physically
+        if (!empty($this->filename)) {
+            $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
+            if (file_exists($target_path)) {
+                unlink($target_path);
+            }
+        }
+
+        // Remove blog associations
+        global $database;
+        $sql = "DELETE FROM blogs_photos WHERE photo_id = ?";
+        $database->query($sql, [$this->id]);
+
+        // Then delete the database record
+        return parent::delete();
+    }
 }
+?>

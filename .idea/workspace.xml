@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d2f04d8e-5b8f-4f84-b5dd-620e643b1a86.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d2f04d8e-5b8f-4f84-b5dd-620e643b1a86.xml" afterDir="false" />
+
+    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="add blogphoto">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +20,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "JappieC"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/gg077/phpgroepsexamen.git",
+    "accountId": "f7ebcb37-2c61-4c3b-bac6-26d08f300971"
+  }
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -30,25 +44,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "Jasper",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
       &quot;mysql&quot;
     ]
   }
-}</component>
+
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\phpgroepsexamen\admin" />
+      <recent name="C:\wamp64\www\phpgroepsexamen" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PS-242.21829.154" />
+        <option value="bundled-php-predefined-a98d8de5180a-4d9f4c849d09-com.jetbrains.php.sharedIndexes-PS-242.21829.154" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -57,16 +88,90 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1738585554632</updated>
-      <workItem from="1738585555706" duration="2427000" />
-      <workItem from="1738657542062" duration="18211000" />
-      <workItem from="1738682930381" duration="125000" />
-      <workItem from="1738744011697" duration="1375000" />
-      <workItem from="1738745404408" duration="7086000" />
-      <workItem from="1738831093310" duration="4486000" />
+      <workItem from="1738585555706" duration="761000" />
+      <workItem from="1739009991010" duration="15673000" />
     </task>
+    <task id="LOCAL-00001" summary="photo upload">
+      <option name="closed" value="true" />
+      <created>1738847655861</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738847655861</updated>
+    </task>
+    <task id="LOCAL-00002" summary="start blog changes">
+      <option name="closed" value="true" />
+      <created>1739175697819</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739175697819</updated>
+    </task>
+    <task id="LOCAL-00003" summary="display blogs">
+      <option name="closed" value="true" />
+      <created>1739179273530</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739179273530</updated>
+    </task>
+    <task id="LOCAL-00004" summary="display photos on edit_blogs">
+      <option name="closed" value="true" />
+      <created>1739180112745</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1739180112745</updated>
+    </task>
+    <task id="LOCAL-00005" summary="temporary cropper">
+      <option name="closed" value="true" />
+      <created>1739180793740</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739180793740</updated>
+    </task>
+    <task id="LOCAL-00006" summary="delete blogphoto">
+      <option name="closed" value="true" />
+      <created>1739181544971</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1739181544971</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add blogphoto">
+      <option name="closed" value="true" />
+      <created>1739183878947</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1739183878947</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="photo upload" />
+    <MESSAGE value="start blog changes" />
+    <MESSAGE value="display blogs" />
+    <MESSAGE value="display photos on edit_blogs" />
+    <MESSAGE value="temporary cropper" />
+    <MESSAGE value="delete blogphoto" />
+    <MESSAGE value="add blogphoto" />
+    <option name="LAST_COMMIT_MESSAGE" value="add blogphoto" />
   </component>
 </project>
