@@ -5,7 +5,8 @@ class User extends Db_object
     //properties
     //public,private, protected
     public $id;
-    public $username;
+    public $email;
+    public $google_id;
     public $password;
     public $first_name;
     public $last_name;
@@ -14,28 +15,56 @@ class User extends Db_object
     protected static $table_name = 'users';
     //methods
 
-    public static function verify_user($username,$password){
+
+    // In User class
+    public static function find_by_google_id($google_id) {
         global $database;
-        $username = $database->escape_string($username);
-        $password = $database->escape_string($password);
-
-        // select * from users where username = $username and password = $password
-        $sql = "SELECT * FROM ". self::$table_name ." WHERE ";
-        $sql .= "username = ? ";
-        $sql .= "AND password = ?";
-        $sql .= " LIMIT 1";
-
-        $the_result_array = self::find_this_query($sql,[$username,$password]);
-
-        return !empty($the_result_array) ? array_shift($the_result_array) : false;
+        $sql = "SELECT * FROM users WHERE google_id = '{$google_id}' LIMIT 1";
+        $result = $database->query($sql);
+        return $result ? mysqli_fetch_assoc($result) : false;
     }
+    public static function verify_user($email, $password) {
+        global $database;
+        $email = $database->escape_string($email);
+
+        // Zoek gebruiker op e-mail
+        $sql = "SELECT * FROM " . self::$table_name . " WHERE email = ? LIMIT 1";
+        $the_result_array = self::find_this_query($sql, [$email]);
+
+        if (!empty($the_result_array)) {
+            $user = array_shift($the_result_array); // Haal het eerste resultaat op
+
+            // Check of wachtwoord al gehashed is
+            if (password_verify($password, $user->password)) {
+                return $user; // Wachtwoord is al gehashed → login normaal
+            }
+
+            // Controleer of het wachtwoord nog plaintext is
+            if ($user->password === $password) {
+                // Dit betekent dat het wachtwoord nog in plaintext is opgeslagen
+                // 3. Hash het wachtwoord nu en update de database
+                $new_hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                $user->password = $new_hashed_password;
+                $user->update();
+
+                return $user; // Geef de gebruiker terug en laat ze inloggen
+            }
+        }
+
+        return false; // Geen gebruiker of wachtwoord incorrect
+    }
+
+
+
 
     /* CRUD */
     /*properties als array voorzien*/
     public function get_properties(){
         return[
             'id'=> $this->id,
-            'username'=>$this->username,
+            'email'=>$this->email,
+            'google_id'=>$this->google_id,
             'password'=>$this->password,
             'first_name'=>$this->first_name,
             'last_name'=>$this->last_name,

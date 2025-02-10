@@ -5,37 +5,36 @@ $the_message = "";
 
 if (isset($_SESSION['the_message'])) {
     $the_message = $_SESSION['the_message'];
-    unset($_SESSION['the_message']); // Verwijder de melding na ophalen
+    unset($_SESSION['the_message']);
 }
+
 if (isset($_POST['submit'])) {
-    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confirmpassword = trim($_POST['confirmpassword']);
-    //check als de user bestaat in onze database
-    $user_found = User::verify_user($username, $password);
+
+    // Controleer of gebruiker bestaat op basis van e-mail
+    $user_found = User::find_by_email($email);
 
     if ($user_found) {
         $the_message = "This user exists, please login!";
-
     } elseif ($password === $confirmpassword) {
+        // Hash het wachtwoord voordat het wordt opgeslagen
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         $user = new User();
-        $user->username = trim($_POST['username']);
+        $user->email = $email;
         $user->first_name = trim($_POST['first_name']);
         $user->last_name = trim($_POST['last_name']);
-        $user->password = trim($_POST['password']);
+        $user->password = $hashed_password;  // Gebruik gehasht wachtwoord
         $user->create();
 
-        $the_message = "New user: " . $user->username . " was added to the Database, click below to login!";
-
-        // Zet de boodschap in de sessie voor gebruik na redirect
+        $the_message = "New user: " . $user->email . " was added, click below to login!";
         $_SESSION['the_message'] = $the_message;
-
-        // Voer een redirect uit naar dezelfde pagina (zonder POST-data)
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit(); // Stop verdere uitvoering van het script
-    }else{
-        $the_message = "Paswords are not alike!";
-
+        header("Location: login.php"); // Redirect naar login
+        exit();
+    } else {
+        $the_message = "Passwords do not match!";
     }
 }
 ?>
@@ -68,7 +67,7 @@ if (isset($_POST['submit'])) {
 						</div>
 					</div>
 					<div class="form-group position-relative has-icon-left mb-4">
-						<input type="text" class="form-control form-control-xl" placeholder="Username" name="username" required>
+						<input type="text" class="form-control form-control-xl" placeholder="email" name="email" required>
 						<div class="form-control-icon">
 							<i class="bi bi-person"></i>
 						</div>

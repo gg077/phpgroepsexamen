@@ -13,14 +13,14 @@ if (isset($_SESSION['the_message'])) {
 
 if (isset($_POST['submit'])) {
     $user = new User();
-    $user->username = trim($_POST['username']);
+    $user->email = trim($_POST['email']);
     $user->first_name = trim($_POST['first_name']);
     $user->last_name = trim($_POST['last_name']);
     $user->password = trim($_POST['password']);
     $user->save();
 
     if (!empty($user)) {
-        $the_message = "New user: " . $user->username . " was added to the Database!";
+        $the_message = "New user: " . $user->email . " was added to the Database!";
     } else {
         $the_message = "Adding the new user FAILED!";
     }
@@ -51,10 +51,10 @@ if (isset($_POST['submit'])) {
 					<div class="row">
 						<div class="col-12">
 							<div class="form-group has-icon-left">
-								<label for="first-name-icon">Username</label>
+								<label for="first-name-icon">email</label>
 								<div class="position-relative">
 									<input type="text" class="form-control"
-									       placeholder="Username input" id="first-name-icon" name="username">
+									       placeholder="email input" id="first-name-icon" name="email">
 									<div class="form-control-icon">
 										<i class="bi bi-person"></i>
 									</div>

@@ -35,6 +35,10 @@ class Db_object
         $result = static::find_this_query("SELECT * FROM ". static::$table_name." WHERE id=?",[$id]);
         return !empty($result) ? array_shift($result): false;
     }
+    public static function find_by_email($email) {
+        $result = static::find_this_query("SELECT * FROM users WHERE email = ?", [$email]);
+        return !empty($result) ? array_shift($result) : false;
+    }
 
     /* CRUD */
     public function create() {
@@ -119,15 +123,15 @@ class Db_object
             }
         }
         //create sql commando, prepared statement (? welk id)
-        //$properties=['username',...,'last-name]
-        // username = ?, ... last-name = ?
+        //$properties=['email',...,'last-name]
+        // email = ?, ... last-name = ?
 
         $sql = "UPDATE $table SET " . implode(', ', array_map(fn($field) => "$field = ?", array_keys($properties))) . " WHERE id = ?";
 
         //array_map met fn($field) => "$field = ?":
         //
         //Hiermee wordt voor elk veld een correcte field = ?-toewijzing gemaakt.
-        //Bijv.: username = ?, password = ?, first_name = ?, last_name = ?.
+        //Bijv.: email = ?, password = ?, first_name = ?, last_name = ?.
 
         //execute
         $database->query($sql,$escaped_values);
