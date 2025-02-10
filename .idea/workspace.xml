@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="display blogs">
+    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="display photos on edit_blogs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/edit_blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/edit_blog.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738585554632</updated>
       <workItem from="1738585555706" duration="761000" />
-      <workItem from="1739009991010" duration="11158000" />
+      <workItem from="1739009991010" duration="11811000" />
     </task>
     <task id="LOCAL-00001" summary="photo upload">
       <option name="closed" value="true" />
@@ -111,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739179273530</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="display photos on edit_blogs">
+      <option name="closed" value="true" />
+      <created>1739180112745</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1739180112745</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,6 +128,7 @@
     <MESSAGE value="photo upload" />
     <MESSAGE value="start blog changes" />
     <MESSAGE value="display blogs" />
-    <option name="LAST_COMMIT_MESSAGE" value="display blogs" />
+    <MESSAGE value="display photos on edit_blogs" />
+    <option name="LAST_COMMIT_MESSAGE" value="display photos on edit_blogs" />
   </component>
 </project>
