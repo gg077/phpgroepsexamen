@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="display photos on edit_blogs">
+    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="temporary cropper">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738585554632</updated>
       <workItem from="1738585555706" duration="761000" />
-      <workItem from="1739009991010" duration="11811000" />
+      <workItem from="1739009991010" duration="12480000" />
     </task>
     <task id="LOCAL-00001" summary="photo upload">
       <option name="closed" value="true" />
@@ -118,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739180112745</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="temporary cropper">
+      <option name="closed" value="true" />
+      <created>1739180793740</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739180793740</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,6 +137,7 @@
     <MESSAGE value="start blog changes" />
     <MESSAGE value="display blogs" />
     <MESSAGE value="display photos on edit_blogs" />
-    <option name="LAST_COMMIT_MESSAGE" value="display photos on edit_blogs" />
+    <MESSAGE value="temporary cropper" />
+    <option name="LAST_COMMIT_MESSAGE" value="temporary cropper" />
   </component>
 </project>

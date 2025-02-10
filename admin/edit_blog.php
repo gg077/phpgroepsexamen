@@ -182,7 +182,8 @@ if (isset($_POST['updateblog'])) {
                                         <div class="position-relative">
                                             <img src="assets/images/photos/<?php echo $photo['filename']; ?>" alt="Blog
                                             Image" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
-                                            <a href="delete_photo.php?photo_id=<?php echo $photo['id']; ?>&blog_id=<?php echo $blog->id; ?>"
+                                            <a href="delete_blogphoto.php?photo_id=<?php echo $photo['id'];
+                                            ?>&blog_id=<?php echo $blog->id; ?>"
                                                class="position-absolute top-0 end-0 bg-danger text-white rounded-circle p-1"
                                                onclick="return confirm('Are you sure you want to delete this photo?');">
                                                 <i class="bi bi-x"></i>
