@@ -4,7 +4,7 @@ class Blog extends Db_object
 {
     public $id;
     public $author_id;
-    public $photo_id;
+//    public $photo_id;
     public $title;
     public $description;
     public $created_at;
@@ -15,13 +15,29 @@ class Blog extends Db_object
         return[
             'id'=> $this->id,
             'author_id'=>$this->author_id,
-            'photo_id'=>$this->photo_id,
+//            'photo_id'=>$this->photo_id,
             'title'=>$this->title,
             'description'=>$this->description,
             'created_at'=>$this->created_at,
             'deleted_at'=>$this->deleted_at
         ];
     }
+
+    public static function get_photos($blog_id) {
+        global $database;
+
+        if (empty($blog_id)) {
+            return [];
+        }
+
+        $sql = "SELECT p.* FROM photos p 
+               INNER JOIN blogs_photos bp ON p.id = bp.photo_id 
+               WHERE bp.blog_id = ?";
+
+        $result = $database->query($sql, [$blog_id]);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
     /**
      * Slaat de geselecteerde categorieën op voor deze blogpost.
      *
@@ -63,8 +79,8 @@ class Blog extends Db_object
 
         // Query om categorieën op te halen voor een specifieke blogpost
         $sql = "SELECT c.* FROM categories c 
-            INNER JOIN blogs_categories bc ON c.id = bc.category_id 
-            WHERE bc.blog_id = ?";
+                INNER JOIN blogs_categories bc ON c.id = bc.category_id 
+                WHERE bc.blog_id = ?";
 
         $result = $database->query($sql, [$blog_id]);
 
