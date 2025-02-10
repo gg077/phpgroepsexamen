@@ -28,13 +28,21 @@ class Photo extends Db_object
         UPLOAD_ERR_EXTENSION=>"A php extension stopped your upload",
     ];
 
+    // Define image sizes
+    private $image_sizes = [
+        'thumbnail' => ['width' => 150, 'height' => 150, 'suffix' => '_thumb'],
+        'medium' => ['width' => 600, 'height' => 400, 'suffix' => '_medium'],
+        'large' => ['width' => 1920, 'height' => 1080, 'suffix' => '_large']
+    ];
+
     // Maximum file size in bytes (5MB)
     const MAX_FILE_SIZE = 5242880;
     // Allowed file types
     const ALLOWED_TYPES = [
         'image/jpeg',
         'image/png',
-        'image/gif'
+        'image/gif',
+        'image/webp'
     ];
 
     /**
@@ -71,7 +79,7 @@ class Photo extends Db_object
             $this->errors[] = "File size exceeds maximum limit of 5MB";
             return false;
         }elseif(!in_array($file['type'], self::ALLOWED_TYPES)){
-            $this->errors[] = "Invalid file type. Only JPEG, PNG and GIF files are allowed";
+            $this->errors[] = "Invalid file type. Only JPEG, PNG, GIF and WebP files are allowed";
             return false;
         }else{
             $date = date('Y_m_d_H_i_s');
@@ -93,6 +101,7 @@ class Photo extends Db_object
             if (!empty($this->tmp_path)) {
                 // Het nieuwe bestand wordt verplaatst naar de juiste locatie en opgeslagen.
                 if (move_uploaded_file($this->tmp_path, $target_path)) {
+//                    $this->create_image_versions($target_path);
                     $this->update(); // Update database
                     unset($this->tmp_path);// Het tijdelijke pad wordt verwijderd.
                     return true;
@@ -117,11 +126,15 @@ class Photo extends Db_object
                 return false;
             }
             if (move_uploaded_file($this->tmp_path, $target_path)) {
+//                $this->create_image_versions($target_path);
                 if ($this->create()) { // Database-insert
                     global$database;
                     $this->id = $database->get_last_insert_id(); // Gebruik de niet-statische methode
                     unset($this->tmp_path);
                     return true;
+                } else {
+                    $this->errors[] = "Database insert failed. Check your create() method.";
+                    return false;
                 }
             } else {
                 $this->errors[] = "This folder does not have write permissions.";
@@ -130,7 +143,48 @@ class Photo extends Db_object
         }
     }
 
-    public function picture_path() {
+    private function create_image_versions($original_path) {
+        try {
+            $imagick = new Imagick($original_path);
+
+            foreach ($this->image_sizes as $size => $dimensions) {
+                // Create new filename for this version
+                $path_info = pathinfo($original_path);
+                $new_filename = $path_info['filename'] . $dimensions['suffix'] . '.' . $path_info['extension'];
+                $new_path = $path_info['dirname'] . DS . $new_filename;
+
+                // Clone original image for this version
+                $resized = clone $imagick;
+
+                // Resize image
+                $resized->scaleImage($dimensions['width'], $dimensions['height'], true);
+
+                // Set compression quality
+                $resized->setImageCompressionQuality(85);
+
+                // Write the resized image
+                $resized->writeImage($new_path);
+                $resized->destroy();
+                return true;  // Add this line
+            }
+
+            $imagick->destroy();
+        } catch (ImagickException $e) {
+            $this->errors[] = "Image processing failed: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function picture_path(/*$size = 'original'*/) {
+//        if ($size === 'original') {
+//            $filename = $this->filename;
+//        } else if (isset($this->image_sizes[$size])) {
+//            $path_info = pathinfo($this->filename);
+//            $filename = $path_info['filename'] . $this->image_sizes[$size]['suffix'] . '.' . $path_info['extension'];
+//        } else {
+//            return 'https://placehold.co/300';
+//        }
+
         $file_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
 
         if ($this->filename && file_exists($file_path)) {
@@ -162,11 +216,23 @@ class Photo extends Db_object
         return $database->query($sql, [$blog_id, $this->id]);
     }
     public function delete() {
-        // First remove the file physically
+        // Delete all image versions
         if (!empty($this->filename)) {
-            $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
-            if (file_exists($target_path)) {
-                unlink($target_path);
+            $path_info = pathinfo(SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename);
+
+            // Delete original
+            $original_path = $path_info['dirname'] . DS . $this->filename;
+            if (file_exists($original_path)) {
+                unlink($original_path);
+            }
+
+            // Delete all sized versions
+            foreach ($this->image_sizes as $size => $dimensions) {
+                $sized_filename = $path_info['filename'] . $dimensions['suffix'] . '.' . $path_info['extension'];
+                $sized_path = $path_info['dirname'] . DS . $sized_filename;
+                if (file_exists($sized_path)) {
+                    unlink($sized_path);
+                }
             }
         }
 
@@ -177,6 +243,15 @@ class Photo extends Db_object
 
         // Then delete the database record
         return parent::delete();
+    }
+
+    public static function find_photos_by_blog($blog_id){
+        global $database;
+        $sql='SELECT photos.* FROM photos'
+            .' LEFT JOIN blogs_photos ON photos.id = blogs_photos.photo_id'
+            .' WHERE blogs_photos.blog_id=? && deleted_at="0000-00-00 00:00:00"';
+        $result=static::find_this_query($sql,[$blog_id]);
+        return $result?$result:false;
     }
 }
 ?>

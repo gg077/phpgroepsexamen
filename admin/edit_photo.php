@@ -66,7 +66,15 @@ if (!empty($_POST['cropped_image'])) {
         $cropped_photo->filename = $croppedFileName;
         $cropped_photo->size = filesize($croppedFilePath);
         $cropped_photo->type = mime_content_type($croppedFilePath);
-        $cropped_photo->save();
+        $cropped_photo->user_id = $photo->user_id;
+        $cropped_photo->tmp_path = $croppedFilePath;
+        $cropped_photo->id = null;
+//        $cropped_photo->save();
+        if ($cropped_photo->create()) {
+            $message = "Gecropte afbeelding succesvol opgeslagen en weergegeven!";
+        } else {
+            $message = "Fout bij opslaan gecropte afbeelding in database: " . join("<br>", $cropped_photo->errors); // Assuming your Photo class has an 'errors' property.  Adjust accordingly.
+        }
 
         // Toon de gecropte afbeelding in plaats van de originele
         $photo->filename = $croppedFileName;
@@ -133,7 +141,10 @@ if (!empty($_POST['cropped_image'])) {
                     <div class="shadow-sm">
                         <!-- Cropper.js Preview -->
                         <div class="col-12 text-center">
-                            <img id="imagePreview" src="<?php echo $photo->picture_path(); ?>" style="max-width: 100%;">
+<!--                                <source media="(min-width: 1200px)" srcset="--><?php //= $photo->picture_path('large'); ?><!--">-->
+<!--                                <source media="(min-width: 768px)" srcset="--><?php //= $photo->picture_path('medium'); ?><!--">-->
+                                <img id="imagePreview" src="<?php echo $photo->picture_path(/*'original'*/); ?>"
+                                     style="max-width: 100%;" alt="<?php echo $photo->alternate_text; ?>">
                         </div>
                     </div>
                     <div class="mt-4">

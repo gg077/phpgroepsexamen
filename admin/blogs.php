@@ -88,7 +88,7 @@ if (isset($_GET['delete'])) {
                                             $first_photo['filename'] :
                                             'https://placehold.co/40x40'; ?>"
                                          alt="">
-                                        </span><?= $author->username; ?>
+                                        </span><?= $author->first_name; ?>
                                     </td>
                                     <td><?= $blog->title; ?></td>
                                     <td><?= $blog->description; ?></td>
@@ -161,7 +161,7 @@ if (isset($_GET['delete'])) {
                                         <img height="40" width="40" class="avatar me-3"
                                         src="<?php echo $first_photo ? 'assets/images/photos/' . $first_photo['filename'] : 'https://placehold.co/40x40'; ?>"
                                         alt="">
-                                        </span><?= $author->username; ?>
+                                        </span><?= $author->first_name; ?>
                                     </td>
                                     <td><?= $blog->title; ?></td>
                                     <td><?= $blog->description; ?></td>
