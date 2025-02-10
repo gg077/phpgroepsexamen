@@ -193,17 +193,17 @@ if (isset($_POST['updateblog'])) {
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="form-group has-icon-left">
-                                <label for="photo">Upload New Photo (optional)</label>
-                                <div class="position-relative">
-                                    <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                                    <div class="form-control-icon">
-                                        <i class="bi bi-cloud-upload"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!--                        <div class="col-12">-->
+<!--                            <div class="form-group has-icon-left">-->
+<!--                                <label for="photo">Upload New Photo (optional)</label>-->
+<!--                                <div class="position-relative">-->
+<!--                                    <input type="file" class="form-control" id="photo" name="photo" accept="image/*">-->
+<!--                                    <div class="form-control-icon">-->
+<!--                                        <i class="bi bi-cloud-upload"></i>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="col-12 d-flex justify-content-end">
                             <input type="submit" name="updateblog" class="btn btn-primary me-1 mb-1" value="Update">
                         </div>
