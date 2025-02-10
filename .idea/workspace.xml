@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="photo upload">
+    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="start blog changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/blogs.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/blogs.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/includes/Blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/Blog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/includes/Photo.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/Photo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/includes/upload_handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/upload_handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/upload.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/upload.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +86,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738585554632</updated>
       <workItem from="1738585555706" duration="761000" />
-      <workItem from="1739009991010" duration="7161000" />
+      <workItem from="1739009991010" duration="10457000" />
     </task>
     <task id="LOCAL-00001" summary="photo upload">
       <option name="closed" value="true" />
@@ -99,7 +96,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738847655861</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="start blog changes">
+      <option name="closed" value="true" />
+      <created>1739175697819</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739175697819</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,6 +112,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="photo upload" />
-    <option name="LAST_COMMIT_MESSAGE" value="photo upload" />
+    <MESSAGE value="start blog changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="start blog changes" />
   </component>
 </project>

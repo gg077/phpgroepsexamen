@@ -74,7 +74,6 @@ if (isset($_GET['delete'])) {
 
                             // Haal de bijbehorende auteur en foto op
                             $author = User::find_by_id($blog->author_id);
-//                            $photo = Photo::find_by_id($blog->photo_id);
                             $photos = Blog::get_photos($blog->id);
                             $first_photo = !empty($photos) ? $photos[0] : null;
 
@@ -85,12 +84,12 @@ if (isset($_GET['delete'])) {
                                     <td><?= $blog->id; ?></td>
                                     <td><span>
                                         <img height="40" width="40" class="avatar me-3"
-                                        src="
-<!--                                    --><?php //echo $blog->photo_id != 0 ? $photo->picture_path() : 'https://placehold.co/40x40'; ?>
-                                            <?= $first_photo ? 'images/' . $first_photo['filename'] : 'https://placehold.co/40x40'; ?>
-                                            "
+                                        src="<?php echo $first_photo != null ? 'assets/images/photos/' .
+                                            $first_photo['filename'] :
+                                            'https://placehold.co/40x40'; ?>"
                                          alt="">
-                                        </span><?= $author->username; ?></td>
+                                        </span><?= $author->username; ?>
+                                    </td>
                                     <td><?= $blog->title; ?></td>
                                     <td><?= $blog->description; ?></td>
                                     <td>
@@ -160,10 +159,7 @@ if (isset($_GET['delete'])) {
                                     <td><?= $blog->id; ?></td>
                                     <td> <span>
                                         <img height="40" width="40" class="avatar me-3"
-                                        src="
-<!--                                        <?php //echo $blog->photo_id != 0 ? $photo->picture_path() : 'https://placehold.co/40x40'; ?>    -->
-                                            <?= $first_photo ? 'images/' . $first_photo['filename'] : 'https://placehold.co/40x40'; ?>
-                                            "
+                                        src="<?php echo $first_photo ? 'assets/images/photos/' . $first_photo['filename'] : 'https://placehold.co/40x40'; ?>"
                                         alt="">
                                         </span><?= $author->username; ?>
                                     </td>
