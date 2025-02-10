@@ -130,12 +130,14 @@ class Photo extends Db_object
         }
     }
 
-    public function picture_path(){
-        if($this->filename && file_exists($this->upload_directory.DS.$this->filename)){
-            return $this->upload_directory.DS.$this->filename;
-        }else{
-            return 'https://placehold.co/300';
+    public function picture_path() {
+        $file_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
+
+        if ($this->filename && file_exists($file_path)) {
+            return $this->upload_directory . DS . $this->filename;
         }
+
+        return 'https://placehold.co/300';
     }
     // Deze methode verwijdert de oude afbeelding fysiek van de server.
     // Dit gebeurt alleen als er een bestand is gekoppeld aan het Photo-object.
@@ -148,5 +150,33 @@ class Photo extends Db_object
         }
     }
 
+    public function associate_with_blog($blog_id) {
+        global $database;
+
+        if (empty($this->id) || empty($blog_id)) {
+            $this->errors[] = "Missing photo ID or blog ID";
+            return false;
+        }
+
+        $sql = "INSERT INTO blogs_photos (blog_id, photo_id) VALUES (?, ?)";
+        return $database->query($sql, [$blog_id, $this->id]);
+    }
+    public function delete() {
+        // First remove the file physically
+        if (!empty($this->filename)) {
+            $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
+            if (file_exists($target_path)) {
+                unlink($target_path);
+            }
+        }
+
+        // Remove blog associations
+        global $database;
+        $sql = "DELETE FROM blogs_photos WHERE photo_id = ?";
+        $database->query($sql, [$this->id]);
+
+        // Then delete the database record
+        return parent::delete();
+    }
 }
 ?>

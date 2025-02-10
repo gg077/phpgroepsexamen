@@ -37,8 +37,6 @@ if (isset($_SESSION['the_message'])) {
     unset($_SESSION['the_message']); // Verwijder de melding na ophalen
 }
 
-//$photo = $blog->photo_id ? Photo::find_by_id($blog->photo_id) : null;
-
 if (isset($_POST['updateblog'])) {
     if ($blog) {
         $blog->title = trim($_POST['title']);
@@ -212,9 +210,45 @@ if (isset($_POST['updateblog'])) {
                     </div>
                 </div>
             </form>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Upload New Photos:</label>
+                    <form action="includes/blogphoto_handler.php" class="dropzone" id="blogPhotoUpload">
+                        <input type="hidden" name="blog_id" value="<?php echo $blog->id; ?>">
+                        <div class="dz-message">Drag and drop files here or click to upload</div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    Dropzone.options.blogPhotoUpload = {
+        paramName: "file",
+        maxFilesize: 5, // 5MB
+        acceptedFiles: "image/jpeg,image/png,image/gif",
+        dictDefaultMessage: "Drop files here or click to upload",
+        init: function() {
+            this.on("sending", function(file, xhr, formData) {
+                // Add blog_id to the form data
+                var blogId = document.querySelector('#blogPhotoUpload input[name="blog_id"]').value;
+                formData.append("blog_id", blogId);
+            });
+
+            this.on("success", function(file, response) {
+                console.log("File uploaded successfully:", response);
+                // Refresh the page to show new photos
+                window.location.reload();
+            });
+
+            this.on("error", function(file, response) {
+                console.log("Upload error:", response);
+                alert("Upload failed: " + response);
+            });
+        }
+    };
+</script>
 
 <?php
 require_once("includes/widget.php");
