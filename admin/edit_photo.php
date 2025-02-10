@@ -70,7 +70,7 @@ if (!empty($_POST['cropped_image'])) {
         $cropped_photo->tmp_path = $croppedFilePath;
         $cropped_photo->id = null;
 //        $cropped_photo->save();
-        if ($cropped_photo->save()) {
+        if ($cropped_photo->create()) {
             $message = "Gecropte afbeelding succesvol opgeslagen en weergegeven!";
         } else {
             $message = "Fout bij opslaan gecropte afbeelding in database: " . join("<br>", $cropped_photo->errors); // Assuming your Photo class has an 'errors' property.  Adjust accordingly.
