@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="delete blogphoto">
-      <change afterPath="$PROJECT_DIR$/admin/includes/blogphoto_handler.php" afterDir="false" />
+    <list default="true" id="16e5f8e5-c6b2-496b-82de-f32f23002561" name="Changes" comment="add blogphoto">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/edit_blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/edit_blog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/includes/Photo.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/Photo.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +85,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738585554632</updated>
       <workItem from="1738585555706" duration="761000" />
-      <workItem from="1739009991010" duration="14746000" />
+      <workItem from="1739009991010" duration="15673000" />
     </task>
     <task id="LOCAL-00001" summary="photo upload">
       <option name="closed" value="true" />
@@ -138,11 +135,30 @@
       <option name="project" value="LOCAL" />
       <updated>1739181544971</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add blogphoto">
+      <option name="closed" value="true" />
+      <created>1739183878947</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1739183878947</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="photo upload" />
@@ -151,6 +167,7 @@
     <MESSAGE value="display photos on edit_blogs" />
     <MESSAGE value="temporary cropper" />
     <MESSAGE value="delete blogphoto" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete blogphoto" />
+    <MESSAGE value="add blogphoto" />
+    <option name="LAST_COMMIT_MESSAGE" value="add blogphoto" />
   </component>
 </project>

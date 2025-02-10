@@ -116,10 +116,7 @@ if (!empty($_POST['cropped_image'])) {
                                 </div>
                             </div>
 
-                            <!-- Cropper.js Preview -->
-                            <div class="col-12 text-center">
-                                <img id="imagePreview" src="<?php echo $photo->picture_path(); ?>" style="max-width: 100%;">
-                            </div>
+
 
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="button" id="cropButton" class="btn btn-warning me-1 mb-1">Crop Image</button>
@@ -134,7 +131,10 @@ if (!empty($_POST['cropped_image'])) {
                 <!-- Rechterkant: Huidige foto en details -->
                 <div class="col-6">
                     <div class="shadow-sm">
-                        <img id="originalImage" src="<?php echo $photo->picture_path(); ?>" alt="<?php echo $photo->title; ?>" class="card-img-top img-fluid img-thumbnail">
+                        <!-- Cropper.js Preview -->
+                        <div class="col-12 text-center">
+                            <img id="imagePreview" src="<?php echo $photo->picture_path(); ?>" style="max-width: 100%;">
+                        </div>
                     </div>
                     <div class="mt-4">
                         <ul class="list-group list-group-flush">
