@@ -16,6 +16,10 @@ if (!$blog) {
     exit();
 }
 
+// Haal de huidige fotos op die aan deze blog gekoppeld zijn
+$current_photos = Blog::get_photos($blog->id);
+var_dump($current_photos);
+
 // Haal de huidige categorieën op die aan deze blog gekoppeld zijn
 $current_categories = Blog::get_categories($blog->id) ?? [];
 
@@ -32,7 +36,9 @@ if (isset($_SESSION['the_message'])) {
     $the_message = $_SESSION['the_message'];
     unset($_SESSION['the_message']); // Verwijder de melding na ophalen
 }
-$photo = $blog->photo_id ? Photo::find_by_id($blog->photo_id) : null;
+
+//$photo = $blog->photo_id ? Photo::find_by_id($blog->photo_id) : null;
+
 if (isset($_POST['updateblog'])) {
     if ($blog) {
         $blog->title = trim($_POST['title']);
@@ -40,30 +46,54 @@ if (isset($_POST['updateblog'])) {
 
         // Controleer of er een nieuwe foto is geüpload
         if (!empty($_FILES['photo']['name'])) {
-            $photo = $blog->photo_id ? Photo::find_by_id($blog->photo_id) : null;
-
-            // Verwijder de oude afbeelding
-            if ($photo) {
-                $photo->update_photo();
-            }
-
-            // Voeg een nieuwe afbeelding toe
-            if ($photo) {
-                $photo->title = trim($_POST['title']);
-                $photo->description = trim($_POST['description']);
-                $photo->set_file($_FILES['photo']);
-                $photo->save();
-            } else {
-                $photo = new Photo();
-                $photo->title = trim($_POST['title']);
-                $photo->description = trim($_POST['description']);
-                $photo->set_file($_FILES['photo']);
-                $photo->save();
-            }
-
-            // Update de foto ID in de blog
+//            $photo = $blog->photo_id ? Photo::find_by_id($blog->photo_id) : null;
+//
+//            // Verwijder de oude afbeelding
+//            if ($photo) {
+//                $photo->update_photo();
+//            }
+//
+//            // Voeg een nieuwe afbeelding toe
+//            if ($photo) {
+//                $photo->title = trim($_POST['title']);
+//                $photo->description = trim($_POST['description']);
+//                $photo->set_file($_FILES['photo']);
+//                $photo->save();
+//            } else {
+//                $photo = new Photo();
+//                $photo->title = trim($_POST['title']);
+//                $photo->description = trim($_POST['description']);
+//                $photo->set_file($_FILES['photo']);
+//                $photo->save();
+//            }
+//
+//            // Update de foto ID in de blog
+//            global $database;
+//            $blog->photo_id = $database->get_last_insert_id();
             global $database;
-            $blog->photo_id = $database->get_last_insert_id();
+
+            // Process each uploaded photo
+            foreach ($_FILES['photos']['name'] as $key => $name) {
+                $photo = new Photo();
+                $photo->title = $blog->title;  // Use blog title for photo
+                $photo->description = $blog->description;
+
+                // Create temporary file array structure that set_file expects
+                $file = [
+                    'name' => $_FILES['photos']['name'][$key],
+                    'type' => $_FILES['photos']['type'][$key],
+                    'tmp_name' => $_FILES['photos']['tmp_name'][$key],
+                    'error' => $_FILES['photos']['error'][$key],
+                    'size' => $_FILES['photos']['size'][$key]
+                ];
+
+                $photo->set_file($file);
+                if ($photo->save()) {
+                    // Insert into blogs_photos table
+                    $sql = "INSERT INTO blogs_photos (blog_id, photo_id) VALUES (?, ?)";
+                    $database->query($sql, [$blog->id, $photo->id]);
+                }
+            }
         }
 
         // **Update de blogpost**
@@ -139,11 +169,28 @@ if (isset($_POST['updateblog'])) {
 
                         <div class="col-12">
                             <label>Current Photo:</label>
-                            <div>
-                                <?php if ($photo): ?>
-                                    <img src="<?php echo $photo->picture_path(); ?>" alt="Blog Image" width="150">
+<!--                            <div>-->
+<!--                                --><?php //if ($photo): ?>
+<!--                                    <img src="--><?php //echo $photo->picture_path(); ?><!--" alt="Blog Image" width="150">-->
+<!--                                --><?php //else: ?>
+<!--                                    <p>No photo uploaded.</p>-->
+<!--                                --><?php //endif; ?>
+<!--                            </div>-->
+                            <div class="d-flex flex-wrap gap-3 mb-3">
+                                <?php if (!empty($current_photos)): ?>
+                                    <?php foreach ($current_photos as $photo): ?>
+                                        <div class="position-relative">
+                                            <img src="assets/images/photos/<?php echo $photo['filename']; ?>" alt="Blog
+                                            Image" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+                                            <a href="delete_photo.php?photo_id=<?php echo $photo['id']; ?>&blog_id=<?php echo $blog->id; ?>"
+                                               class="position-absolute top-0 end-0 bg-danger text-white rounded-circle p-1"
+                                               onclick="return confirm('Are you sure you want to delete this photo?');">
+                                                <i class="bi bi-x"></i>
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
                                 <?php else: ?>
-                                    <p>No photo uploaded.</p>
+                                    <p>No photos uploaded.</p>
                                 <?php endif; ?>
                             </div>
                         </div>
