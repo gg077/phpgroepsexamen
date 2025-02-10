@@ -8,8 +8,11 @@ if (empty($_GET['id'])) {
     exit();
 }
 
+$_SESSION['creating_blog']=true;
+
 // Haal het blogbericht op
 $blog = Blog::find_by_id($_GET['id']);
+$photos = Photo::find_photos_by_blog($blog->id);
 
 if (!$blog) {
     header("location: blogs.php"); // Redirect als het blog niet bestaat
@@ -44,54 +47,30 @@ if (isset($_POST['updateblog'])) {
 
         // Controleer of er een nieuwe foto is geüpload
         if (!empty($_FILES['photo']['name'])) {
-//            $photo = $blog->photo_id ? Photo::find_by_id($blog->photo_id) : null;
-//
-//            // Verwijder de oude afbeelding
-//            if ($photo) {
-//                $photo->update_photo();
-//            }
-//
-//            // Voeg een nieuwe afbeelding toe
-//            if ($photo) {
-//                $photo->title = trim($_POST['title']);
-//                $photo->description = trim($_POST['description']);
-//                $photo->set_file($_FILES['photo']);
-//                $photo->save();
-//            } else {
-//                $photo = new Photo();
-//                $photo->title = trim($_POST['title']);
-//                $photo->description = trim($_POST['description']);
-//                $photo->set_file($_FILES['photo']);
-//                $photo->save();
-//            }
-//
-//            // Update de foto ID in de blog
-//            global $database;
-//            $blog->photo_id = $database->get_last_insert_id();
-            global $database;
+            $photo = $blog->photo_id ? Photo::find_by_id($blog->photo_id) : null;
 
-            // Process each uploaded photo
-            foreach ($_FILES['photos']['name'] as $key => $name) {
-                $photo = new Photo();
-                $photo->title = $blog->title;  // Use blog title for photo
-                $photo->description = $blog->description;
-
-                // Create temporary file array structure that set_file expects
-                $file = [
-                    'name' => $_FILES['photos']['name'][$key],
-                    'type' => $_FILES['photos']['type'][$key],
-                    'tmp_name' => $_FILES['photos']['tmp_name'][$key],
-                    'error' => $_FILES['photos']['error'][$key],
-                    'size' => $_FILES['photos']['size'][$key]
-                ];
-
-                $photo->set_file($file);
-                if ($photo->save()) {
-                    // Insert into blogs_photos table
-                    $sql = "INSERT INTO blogs_photos (blog_id, photo_id) VALUES (?, ?)";
-                    $database->query($sql, [$blog->id, $photo->id]);
-                }
+            // Verwijder de oude afbeelding
+            if ($photo) {
+                $photo->update_photo();
             }
+
+            // Voeg een nieuwe afbeelding toe
+            if ($photo) {
+                $photo->title = trim($_POST['title']);
+                $photo->description = trim($_POST['description']);
+                $photo->set_file($_FILES['photo']);
+                $photo->save();
+            } else {
+                $photo = new Photo();
+                $photo->title = trim($_POST['title']);
+                $photo->description = trim($_POST['description']);
+                $photo->set_file($_FILES['photo']);
+                $photo->save();
+            }
+
+            // Update de foto ID in de blog
+            global $database;
+            $blog->photo_id = $database->get_last_insert_id();
         }
 
         // **Update de blogpost**
@@ -100,17 +79,25 @@ if (isset($_POST['updateblog'])) {
             if (!empty($_POST['categories']) && is_array($_POST['categories'])) {
                 $blog->save_categories($_POST['categories']); // Oproepen van de verbeterde functie
             }
+            if(!empty($_SESSION['photo_ids']) && is_array($_SESSION['photo_ids'])){
+                foreach ($photos as $photo) {
+                    array_push($_SESSION['photo_ids'],$photo->id);
+                }
+                $blog->save_photos($_SESSION['photo_ids']);
+                unset($_SESSION['photo_ids']);
+            }
 
             $_SESSION['the_message'] = "Blogpost en categorieën succesvol bijgewerkt.";
         } else {
             $_SESSION['the_message'] = "Er is een fout opgetreden bij het updaten.";
         }
 
+        unset($_SESSION['creating_blog']);
+
         header("location: blogs.php");
         exit();
     }
 }
-
 ?>
 
 <div class="card">
@@ -213,9 +200,8 @@ if (isset($_POST['updateblog'])) {
             <div class="col-12">
                 <div class="form-group">
                     <label>Upload New Photos:</label>
-                    <form action="includes/blogphoto_handler.php" class="dropzone" id="blogPhotoUpload">
-                        <input type="hidden" name="blog_id" value="<?php echo $blog->id; ?>">
-                        <div class="dz-message">Drag and drop files here or click to upload</div>
+                    <form action="includes/upload_handler.php" class="dropzone rounded border-light-subtle" id="photoUpload">
+                        <div class="dz-message"><i class="bi bi-upload me-3"></i>Drag and drop files here or click to upload</div>
                     </form>
                 </div>
             </div>
@@ -224,22 +210,18 @@ if (isset($_POST['updateblog'])) {
 </div>
 
 <script>
-    Dropzone.options.blogPhotoUpload = {
+    Dropzone.options.photoUpload = {
         paramName: "file",
-        maxFilesize: 5, // 5MB
+        maxFilesize: 2,
         acceptedFiles: "image/jpeg,image/png,image/gif",
         dictDefaultMessage: "Drop files here or click to upload",
         init: function() {
             this.on("sending", function(file, xhr, formData) {
-                // Add blog_id to the form data
-                var blogId = document.querySelector('#blogPhotoUpload input[name="blog_id"]').value;
-                formData.append("blog_id", blogId);
             });
 
             this.on("success", function(file, response) {
                 console.log("File uploaded successfully:", response);
-                // Refresh the page to show new photos
-                window.location.reload();
+                // alert("File uploaded successfully!");
             });
 
             this.on("error", function(file, response) {

@@ -244,5 +244,14 @@ class Photo extends Db_object
         // Then delete the database record
         return parent::delete();
     }
+
+    public static function find_photos_by_blog($blog_id){
+        global $database;
+        $sql='SELECT photos.* FROM photos'
+            .' LEFT JOIN blogs_photos ON photos.id = blogs_photos.photo_id'
+            .' WHERE blogs_photos.blog_id=? && deleted_at="0000-00-00 00:00:00"';
+        $result=static::find_this_query($sql,[$blog_id]);
+        return $result?$result:false;
+    }
 }
 ?>

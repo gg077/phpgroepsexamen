@@ -38,6 +38,22 @@ class Blog extends Db_object
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
+    public function save_photos($photo_ids) {
+        global $database;
+
+        // Verwijder eerst bestaande categorieën voor deze blogpost
+        $sql = "DELETE FROM blogs_photos WHERE blog_id = ?";
+        $database->query($sql, [$this->id]);
+
+        // Voeg de geselecteerde categorieën toe
+        if (!empty($photo_ids)) {
+            foreach ($photo_ids as $photo_id) {
+                $sql = "INSERT INTO blogs_photos (blog_id, photo_id) VALUES (?, ?)";
+                $database->query($sql, [$this->id, $photo_id]);
+            }
+        }
+    }
+
     /**
      * Slaat de geselecteerde categorieën op voor deze blogpost.
      *

@@ -85,6 +85,10 @@ class Db_object
         // Query uitvoeren en resultaat controleren
         $result = $database->query($sql, $escaped_values);
 
+        if($table==='photos') {
+            $_SESSION['photo_ids'][] = mysqli_insert_id($database->connection);
+        }
+
         if ($result) {
             return true;  // Succesvolle insert
         } else {
